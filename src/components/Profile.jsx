@@ -1,7 +1,9 @@
+import './Profile.css'
+
 export default function Profile({ name, accountDescription }) {
 	return (
-		<div>
-			<div>
+		<div className='profile'>
+			<div className='name-container'>
 				<p>{name}</p>
 				<p>{accountDescription}</p>
 			</div>

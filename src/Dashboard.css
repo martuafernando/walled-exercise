@@ -1,0 +1,9 @@
+.dashboard {
+  background-color: #FAFBFD;
+}
+
+.headline-and-profile {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+}

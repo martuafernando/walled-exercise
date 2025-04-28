@@ -21,7 +21,7 @@ export default function Table({ data = [], onQuery }) {
 	}, [query, sortBy, sortOrder, onQuery]);
 
 	return (
-		<>
+		<div className="table">
 			<div className="table-controller">
 				<input
 					type="text"
@@ -111,6 +111,6 @@ export default function Table({ data = [], onQuery }) {
 					Next
 				</button>
 			</div>
-		</>
+		</div>
 	);
 }

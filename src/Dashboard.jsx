@@ -1,17 +1,17 @@
 import axios from "axios";
-import "./App.css";
 import Account from "./components/Account";
 import Header from "./components/Header";
 import Headline from "./components/Headline";
 import Profile from "./components/Profile";
 
 import Table from "./components/Table";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import './Dashboard.css'
 
 const BASE_URL = "http://localhost:3000";
 
-function App() {
+function Dashboard() {
 	/**
 	 * { name, accountNumber, balance, currency }
 	 */
@@ -43,7 +43,7 @@ function App() {
 	};
 
 	return (
-		<>
+		<div className="dashboard">
 			<Header />
 			<div className="headline-and-profile">
 				<Headline
@@ -63,8 +63,8 @@ function App() {
 			/>
 
 			<Table data={transactions} onQuery={onQuery} />
-		</>
+		</div>
 	);
 }
 
-export default App;
+export default Dashboard;
