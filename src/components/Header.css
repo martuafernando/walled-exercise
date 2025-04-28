@@ -1,0 +1,14 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul {
+  display: flex;
+  gap: 16px;
+}
+
+li {
+  list-style: none;
+}

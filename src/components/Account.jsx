@@ -1,6 +1,7 @@
 export default function Account({
   accountNumber,
 	balance,
+	currency,
 	onTopUpButtonClicked = () => {},
 	onTransferButtonClicked = () => {},
 }) {
@@ -14,7 +15,7 @@ export default function Account({
 			<div>
 				<p>Balance</p>
 				<div>
-					<p>{ `Rp${balance}` }</p>
+					<p>{ `${currency}${balance}` }</p>
 					<button type="button">Eye</button>
 				</div>
 			</div>

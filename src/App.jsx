@@ -1,3 +1,4 @@
+import axios from "axios";
 import "./App.css";
 import Account from "./components/Account";
 import Header from "./components/Header";
@@ -5,24 +6,48 @@ import Headline from "./components/Headline";
 import Profile from "./components/Profile";
 
 import Table from "./components/Table";
+import { useEffect } from "react";
+import { useState } from "react";
 
-const columns = [
-  { header: "Name", key: "name" },
-  { header: "Email", key: "email" },
-];
-
-const data = [
-  { name: "Joe", email: "joe@example.com" },
-  { name: "Doe", email: "doe@example.com" },
-];
+const BASE_URL = "http://localhost:3000";
 
 function App() {
+	/**
+	 * { name, accountNumber, balance, currency }
+	 */
+	const [user, setUser] = useState({});
+
+	/**
+	 * { id, date, type, from, to, description, amount }
+	 */
+	const [transactions, setTransactions] = useState([]);
+
+	useEffect(() => {
+		axios.get(`${BASE_URL}/user`).then((response) => {
+			setUser(response.data);
+		});
+
+		axios.get(`${BASE_URL}/transactions`).then((response) => {
+			setTransactions(response.data);
+		});
+	}, []);
+
+	const onQuery = ({ query, sortBy, sortOrder }) => {
+		axios
+			.get(
+				`${BASE_URL}/transactions/?q=${query}&_sort=${sortBy}&_order=${sortOrder}`,
+			)
+			.then((response) => {
+				setTransactions(response.data);
+			});
+	};
+
 	return (
 		<>
 			<Header />
-			<div>
+			<div className="headline-and-profile">
 				<Headline
-					title="Good Morning, Chelsea"
+					title={`Good Morning, ${user.name}`}
 					text="Check all your incoming and outgoing transactions here"
 				/>
 
@@ -31,9 +56,13 @@ function App() {
 					accountDescription="Personal Account"
 				/>
 			</div>
-      <Account accountNumber="100889" balance="10.000.000" />
+			<Account
+				accountNumber={user.accountNumber}
+				balance={user.balance}
+				currency={user.currency}
+			/>
 
-      <Table columns={columns} data={data} />
+			<Table data={transactions} onQuery={onQuery} />
 		</>
 	);
 }

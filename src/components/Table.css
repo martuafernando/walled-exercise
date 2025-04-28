@@ -1,0 +1,25 @@
+table {
+  margin-top: 24px;
+}
+
+table td{
+  text-align: start;
+  padding: 16px;
+}
+
+.table-controller {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-controller {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+input, select {
+  padding: 8px 16px;
+  min-height: 44px;
+  box-sizing: border-box;
+}
