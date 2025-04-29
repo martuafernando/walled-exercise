@@ -1,13 +1,13 @@
 import axios from "axios";
-import Account from "./components/Account";
-import Header from "./components/Header";
-import Headline from "./components/Headline";
-import Profile from "./components/Profile";
+import Account from "../components/Account";
+import Header from "../components/Header";
+import Headline from "../components/Headline";
+import Profile from "../components/Profile";
 
-import Table from "./components/Table";
+import Table from "../components/Table";
 import { useEffect, useState } from "react";
 
-import './Dashboard.css'
+import "./Dashboard.css";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -22,7 +22,11 @@ function Dashboard() {
 	 */
 	const [transactions, setTransactions] = useState([]);
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	useEffect(() => {
+		setIsLoading(true);
+
 		axios.get(`${BASE_URL}/user`).then((response) => {
 			setUser(response.data);
 		});
@@ -30,9 +34,13 @@ function Dashboard() {
 		axios.get(`${BASE_URL}/transactions`).then((response) => {
 			setTransactions(response.data);
 		});
+
+		setIsLoading(false);
 	}, []);
 
 	const onQuery = ({ query, sortBy, sortOrder }) => {
+		setIsLoading(true);
+
 		axios
 			.get(
 				`${BASE_URL}/transactions/?q=${query}&_sort=${sortBy}&_order=${sortOrder}`,
@@ -40,6 +48,8 @@ function Dashboard() {
 			.then((response) => {
 				setTransactions(response.data);
 			});
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -52,7 +62,7 @@ function Dashboard() {
 				/>
 
 				<Profile
-					name="Chelsea Immanuela"
+					name={user.name}
 					accountDescription="Personal Account"
 				/>
 			</div>
@@ -62,7 +72,7 @@ function Dashboard() {
 				currency={user.currency}
 			/>
 
-			<Table data={transactions} onQuery={onQuery} />
+			<Table data={transactions} onQuery={onQuery} isLoading={isLoading} />
 		</div>
 	);
 }

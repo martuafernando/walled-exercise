@@ -1,7 +1,7 @@
 import "./Table.css";
 import React, { useState, useEffect } from "react";
 
-export default function Table({ data = [], onQuery }) {
+export default function Table({ data = [], onQuery, isLoading }) {
 	const columns = Object.keys(data[0] ?? {});
 
 	const [query, setQuery] = useState("");
@@ -76,7 +76,11 @@ export default function Table({ data = [], onQuery }) {
 					</tr>
 				</thead>
 				<tbody>
-					{data.length === 0 ? (
+					{isLoading ? (
+						<tr>
+							<td colSpan={columns.length}>Loading</td>
+						</tr>
+					) : data.length === 0 ? (
 						<tr>
 							<td colSpan={columns.length}>No data available</td>
 						</tr>
